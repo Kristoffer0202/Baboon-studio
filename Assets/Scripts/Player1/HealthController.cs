@@ -6,15 +6,15 @@ using UnityEngine;
 public class HealthController : MonoBehaviour
 {
     [SerializeField]
-    float startHealthL = 100, startHealthR = 100;
+    float startHealth = 100;
     [SerializeField]
-    float currentHealthL, currentHealthR;
+    float currentHealth;
 
     public float damage;
-    GameObject healthBarR, healthBarL;
-    Image imgR, imgL;
+    Image img;
+    public Image healthBar;
 
-    public PlayerController playerControllerL, playerControllerR;
+    public PlayerController playerController;
 
     
     
@@ -24,44 +24,30 @@ public class HealthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        healthBarR = GameObject.Find("HealthbarPlayer2_FG");
-        imgR = healthBarR.GetComponent<Image>();
-        healthBarL = GameObject.Find("HealthbarPlayer1_FG");
-        imgL = healthBarL.GetComponent<Image>();
-        currentHealthL = startHealthL;
-        currentHealthR = startHealthR;
+        img = healthBar.GetComponent<Image>();
+        currentHealth = startHealth;
     }
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {  
         LoseHealth();
-        
     }
 
     void LoseHealth()
     {
-        if (playerControllerR.isAttacking == true && isHit == false)
+        if (playerController.isAttacking == true && isHit == false)
         {
-            UpdateHealthBar(damage, imgL, currentHealthL, startHealthL);
+            UpdateHealthBar(damage, img, currentHealth, startHealth);
             print("tewst");
             isHit = true;
-            playerControllerR.isAttacking = false;
-        }
-        if (playerControllerL.isAttacking == true && isHit == false)
-        {
-            UpdateHealthBar(damage, imgR, currentHealthR, startHealthR);
-            print("tewst");
-            isHit = true;
-            playerControllerL.isAttacking = false;
+            playerController.isAttacking = false;
         }
     }
 
     void UpdateHealthBar(float dmg, Image img, float currentHP, float startHP)
     {
-        currentHP = currentHP - dmg;
+        currentHealth = currentHP - dmg;
         img.fillAmount =  currentHP / startHP;
-
     }
 }

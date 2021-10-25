@@ -1120,7 +1120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1529827479
 Transform:
   m_ObjectHideFlags: 0
@@ -1144,7 +1144,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1529827478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 080b4f28e459f4740b13dff76205ceb7, type: 3}
+  m_Script: {fileID: 0}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1652550122
@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 1656423150}
   - component: {fileID: 1656423151}
   - component: {fileID: 1656423155}
+  - component: {fileID: 1656423154}
   m_Layer: 0
   m_Name: Player1
   m_TagString: Untagged
@@ -1241,7 +1242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  hpController: {fileID: 1811369963}
+  hpController: {fileID: 1656423154}
   isPlayerRight: 0
   punchCol: {fileID: 1037956013}
   kickCol: {fileID: 1040296439}
@@ -1316,6 +1317,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1656423148}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1656423154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1656423148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12bbbf23c6e1ce44af5ca917962b7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 100
+  currentHealth: 0
+  damage: 0
+  healthBar: {fileID: 2045123004}
+  playerController: {fileID: 1656423150}
+  isHit: 0
 --- !u!54 &1656423155
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1356,18 +1375,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1811369962}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d12bbbf23c6e1ce44af5ca917962b7a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealthL: 100
-  startHealthR: 100
-  currentHealthL: 0
-  currentHealthR: 0
+  startHealth: 100
+  currentHealth: 0
   damage: 0
-  playerControllerL: {fileID: 1656423150}
-  playerControllerR: {fileID: 2085600850}
+  healthBar: {fileID: 0}
+  playerController: {fileID: 0}
   isHit: 0
 --- !u!4 &1811369964
 Transform:
@@ -1546,6 +1563,7 @@ GameObject:
   - component: {fileID: 2085600852}
   - component: {fileID: 2085600851}
   - component: {fileID: 2085600850}
+  - component: {fileID: 2085600854}
   - component: {fileID: 2085600849}
   - component: {fileID: 2085600848}
   m_Layer: 0
@@ -1597,7 +1615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isAttacking: 0
-  hpController: {fileID: 1811369963}
+  hpController: {fileID: 2085600854}
   isPlayerRight: 1
   punchCol: {fileID: 1430077383}
   kickCol: {fileID: 617269966}
@@ -1675,3 +1693,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2085600854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2085600847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d12bbbf23c6e1ce44af5ca917962b7a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startHealth: 100
+  currentHealth: 0
+  damage: 0
+  healthBar: {fileID: 159253511}
+  playerController: {fileID: 2085600850}
+  isHit: 0

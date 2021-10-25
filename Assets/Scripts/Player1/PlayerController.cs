@@ -32,10 +32,6 @@ public class PlayerController : MonoBehaviour
         Move();
         Kick();
         Slag();
-
-
-
-
     }
     void OnCollisionStay()
     {
@@ -76,24 +72,19 @@ public class PlayerController : MonoBehaviour
     }
     void Kick()
     {
-
         if (Input.GetKeyDown(kick))
-        {
-            
+        { 
             StartCoroutine(AttackDelay(kickCol));
-           
         }
 
     }
 
     void Slag()
     {
-
         if (Input.GetKeyDown(punch))
         {         
             StartCoroutine(AttackDelay(punchCol));
         }
-
     }
 
     IEnumerator AttackDelay(Collider col)
@@ -111,13 +102,16 @@ public class PlayerController : MonoBehaviour
             hpController.damage = 10;
             hpController.isHit = false;
         }
-        else { isAttacking = false; }
 
-        if (other.gameObject.CompareTag("Kick"))
+        else if (other.gameObject.CompareTag("Kick"))
         {
             isAttacking = true;
             hpController.damage = 20;
             hpController.isHit = false;
+        }
+        else
+        {
+            isAttacking = false; 
         }
     }
 }
