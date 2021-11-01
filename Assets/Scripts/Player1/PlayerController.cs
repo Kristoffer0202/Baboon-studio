@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
 
     public bool isPlayerRight;
 
+    public string navn;
+
     public Collider punchCol, kickCol;
 
     public KeyCode left, right, jumpKey, kick, punch;

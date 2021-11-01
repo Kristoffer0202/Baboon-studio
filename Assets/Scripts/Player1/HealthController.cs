@@ -8,7 +8,7 @@ public class HealthController : MonoBehaviour
     [SerializeField]
     float startHealth = 100;
     [SerializeField]
-    float currentHealth;
+    public float currentHealth;
 
     public float damage;
     Image img;
@@ -39,7 +39,6 @@ public class HealthController : MonoBehaviour
         if (playerController.isAttacking == true && isHit == false)
         {
             UpdateHealthBar(damage, img, currentHealth, startHealth);
-            print("tewst");
             isHit = true;
             playerController.isAttacking = false;
         }
