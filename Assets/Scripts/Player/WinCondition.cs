@@ -8,7 +8,7 @@ public class WinCondition : MonoBehaviour
     public HealthController hpController;
     public PlayerController playerController;
     public int deathHP = 0;
-    public Text text;
+    public Text gameOverText;
 
 
 
@@ -28,7 +28,7 @@ public class WinCondition : MonoBehaviour
     {
         if (hpController.currentHealth <= deathHP)
         {
-            text.text = playerController.navn + " tabte";
+            gameOverText.text = playerController.navn + " tabte";
         }
     }
 }

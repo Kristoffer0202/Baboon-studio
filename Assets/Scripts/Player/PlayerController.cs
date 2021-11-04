@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public bool isGrounded;
     Rigidbody rb;
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,11 +66,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(left))
         {
-            rb.MovePosition(transform.position - transform.right * Time.deltaTime * speed);
+            rb.MovePosition(transform.position - transform.forward * Time.deltaTime * speed);
         }
         else if (Input.GetKey(right))
         {
-            rb.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
+            rb.MovePosition(transform.position + transform.forward * Time.deltaTime * speed);
         }
 
 
@@ -76,7 +79,9 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetKeyDown(kick))
         { 
+            
             StartCoroutine(AttackDelay(kickCol));
+
         }
 
     }
