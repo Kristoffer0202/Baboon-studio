@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkiftBillede : MonoBehaviour
+public class Karakter : MonoBehaviour
 {
+
+
     // Start is called before the first frame update
     void Start()
     {
