@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Karakter : MonoBehaviour
 {
+    public GameObject player;
 
 
     // Start is called before the first frame update

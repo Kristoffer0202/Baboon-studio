@@ -19,7 +19,6 @@ public class PlayerController : MonoBehaviour
 
     public KeyCode left, right, jumpKey, kick, punch;
 
-    private Sprite hjaltiStå, hjaltiKick, hjaltiPunch;
     public Sprite stå, spark, slå, hop;
 
     // Start is called before the first frame update
@@ -34,8 +33,8 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 2.0f, 0.0f);
-        punchPos = punchCol.gameObject.transform.position;
-        kickPos = kickCol.gameObject.transform.position;
+        punchPos = punchCol.gameObject.transform.localPosition;
+        kickPos = kickCol.gameObject.transform.localPosition;
     }
     void Update()
     {
@@ -43,9 +42,21 @@ public class PlayerController : MonoBehaviour
         Kick();
         Slag();
     }
-    void OnCollisionStay()
+    void OnCollisionEnter(Collision collision)
     {
-        isGrounded = true;
+        if (collision.gameObject.name == "Ground")
+        {
+            isGrounded = true;
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = stå; 
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.name == "Ground")
+        {
+            isGrounded = false;
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = hop;
+        }
     }
     void Move()
     {
@@ -58,8 +69,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             isGrounded = false;
-            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
-            ChangeImageBack(hop, stå);
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse); 
         }
     }
     void SidewaysMove()

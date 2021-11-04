@@ -16,8 +16,6 @@ public class HealthController : MonoBehaviour
 
     public PlayerController playerController;
 
-    
-    
     public bool isHit = false;
 
 
