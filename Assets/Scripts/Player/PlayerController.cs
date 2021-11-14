@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
 
     public HealthController hpController;
 
-    public bool isPlayerRight;
+    public bool isPlayerRight; // Differentiere mellem spillere, højre og venstre (spiller 1 og 2)
 
     public string navn;
 
@@ -21,18 +21,22 @@ public class PlayerController : MonoBehaviour
 
     public Sprite stå, spark, slå, hop;
 
-    // Start is called before the first frame update
     public Vector3 jump;
     public float jumpForce;
     public float speed;
-    public bool isGrounded;
     Rigidbody rb;
 
+    private float attackCd = 1f;
+    private float attackTimer = 0f;
+
+    [SerializeField]
+    private LayerMask groundLayer;
+    public float distanceToGround;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        jump = new Vector3(0.0f, 2.0f, 0.0f);
+        jump = new Vector3(0.0f, 1.0f, 0.0f);
         punchPos = punchCol.gameObject.transform.localPosition;
         kickPos = kickCol.gameObject.transform.localPosition;
     }
@@ -42,22 +46,7 @@ public class PlayerController : MonoBehaviour
         Kick();
         Slag();
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.name == "Ground")
-        {
-            isGrounded = true;
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = stå; 
-        }
-    }
-    void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.name == "Ground")
-        {
-            isGrounded = false;
-            this.gameObject.GetComponent<SpriteRenderer>().sprite = hop;
-        }
-    }
+    
     void Move()
     {
         Hop();
@@ -65,13 +54,27 @@ public class PlayerController : MonoBehaviour
     }
     void Hop()
     {
-
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        if (Input.GetKeyDown(jumpKey) && groundCheck())
         {
-            isGrounded = false;
-            rb.AddForce(jump * jumpForce, ForceMode.Impulse); 
+            rb.AddForce(jump * jumpForce, ForceMode.Impulse);
         }
     }
+    private void OnCollisionEnter(Collision collision) // Tjekker om spiller er på jorden eller ej og viser en bestemt sprite efter det
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = stå;
+        }
+    }
+    private void OnCollisionExit(Collision collision) 
+    {
+        if (collision.gameObject.CompareTag("Floor"))
+        {
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = hop;
+        }
+    }
+
+
     void SidewaysMove()
     {
         Vector3 m_Input = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
@@ -93,35 +96,41 @@ public class PlayerController : MonoBehaviour
     }
     void Kick()
     {
-        if (Input.GetKeyDown(kick))
+        if (Input.GetKeyDown(kick) && attackTimer <= 0)
         {
-            print("test");
+            attackTimer = attackCd;
             StartCoroutine(AttackDelay(kickCol));
             StartCoroutine(ChangeImageBack(spark,stå));
         }
+        else
+        {
+            attackTimer -= Time.deltaTime;
+        }
     }
-
     void Slag()
     {
-        if (Input.GetKeyDown(punch))
-        {         
+        if (Input.GetKeyDown(punch) && attackTimer <= 0)
+        {
+            attackTimer = attackCd;
             StartCoroutine(AttackDelay(punchCol));
             StartCoroutine(ChangeImageBack(slå,stå));
         }
+        else
+        {
+            attackTimer -= Time.deltaTime;
+        }
     }
-
-    
-
+   
     IEnumerator AttackDelay(Collider col)
     {
         col.enabled = true;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         col.enabled = false;
     }
     IEnumerator ChangeImageBack(Sprite sp1, Sprite sp2)
     {
         this.gameObject.GetComponent<SpriteRenderer>().sprite = sp1;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.2f);
         this.gameObject.GetComponent<SpriteRenderer>().sprite = sp2;
     }
 
@@ -143,6 +152,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             isAttacking = false;
-        }
+        } 
+    }  
+    
+    public bool groundCheck()
+    {
+        RaycastHit raycastHit;
+        Physics.Raycast(transform.position, Vector3.down, out raycastHit,distanceToGround,groundLayer);
+        return raycastHit.collider != null;
     }
 }

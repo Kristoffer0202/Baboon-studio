@@ -6,11 +6,12 @@ TagManager:
   tags:
   - Punch
   - Kick
+  - Floor
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 

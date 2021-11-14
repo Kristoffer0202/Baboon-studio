@@ -26,9 +26,10 @@ public class WinCondition : MonoBehaviour
     }
     void Win()
     {
-        if (hpController.currentHealth <= deathHP)
+        if (playerController.hpController.currentHealth <= deathHP)
         {
             gameOverText.text = playerController.navn + " tabte";
+            
         }
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour
 {
-    [SerializeField]
-    float startHealth = 100;
-    [SerializeField]
+    //[SerializeField]
+    float startHealth = 500;
+    //[SerializeField]
     public float currentHealth;
 
     public float damage;
@@ -19,14 +19,14 @@ public class HealthController : MonoBehaviour
     public bool isHit = false;
 
 
-    // Start is called before the first frame update
+    
     void Start()
     {
         img = healthBar.GetComponent<Image>();
         currentHealth = startHealth;
     }
 
-    // Update is called once per frame
+    
     void Update()
     {  
         LoseHealth();
