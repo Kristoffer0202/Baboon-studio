@@ -14,5 +14,9 @@ public class MainMenu : MonoBehaviour
         Debug.Log("QUIT");
         Application.Quit();
 
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 }
