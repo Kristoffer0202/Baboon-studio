@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public PlayerController otherPlayer;
+
     [SerializeField]
     public bool isAttacking = false;
 
@@ -28,6 +30,11 @@ public class PlayerController : MonoBehaviour
 
     private float attackCd = 1f;
     private float attackTimer = 0f;
+
+    public float knockbackKick;
+    public float knockbackPunch;
+
+    public Vector3 moveDirection;
 
     [SerializeField]
     private LayerMask groundLayer;
@@ -83,6 +90,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.MovePosition(transform.position - transform.right * Time.deltaTime * speed);
             this.gameObject.GetComponent<SpriteRenderer>().flipX = true;
+            knockbackKick = -knockbackKick;
+            knockbackPunch = -knockbackPunch;
             punchCol.gameObject.GetComponent<Transform>().transform.localPosition = new Vector3(-punchPos.x, punchPos.y, punchPos.z);
             kickCol.gameObject.GetComponent<Transform>().transform.localPosition = new Vector3(-kickPos.x, kickPos.y, kickPos.z);
         }
@@ -90,6 +99,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.MovePosition(transform.position + transform.right * Time.deltaTime * speed);
             this.gameObject.GetComponent<SpriteRenderer>().flipX = false;
+            knockbackKick = Mathf.Abs(knockbackKick);
+            knockbackPunch = Mathf.Abs(knockbackPunch);
             punchCol.gameObject.GetComponent<Transform>().transform.localPosition = new Vector3(punchPos.x, punchPos.y, punchPos.z);
             kickCol.gameObject.GetComponent<Transform>().transform.localPosition = new Vector3(kickPos.x, kickPos.y, kickPos.z);
         }
@@ -141,6 +152,7 @@ public class PlayerController : MonoBehaviour
             isAttacking = true;
             hpController.damage = 10;
             hpController.isHit = false;
+            rb.AddForce(new Vector3(otherPlayer.knockbackPunch, 0f, 0f), ForceMode.Impulse);
         }
 
         else if (other.gameObject.CompareTag("Kick"))
@@ -148,6 +160,7 @@ public class PlayerController : MonoBehaviour
             isAttacking = true;
             hpController.damage = 20;
             hpController.isHit = false;
+            rb.AddForce(new Vector3(otherPlayer.knockbackKick, 0f, 0f), ForceMode.Impulse);
         }
         else
         {
